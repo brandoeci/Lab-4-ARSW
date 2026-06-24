@@ -1,0 +1,13 @@
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: blueprints
+      POSTGRES_USER: arsw
+      POSTGRES_PASSWORD: arsw
+    ports:
+      - "5433:5432"   # host:container — cambiado de 5432 a 5433
+    volumes:
+      - blueprints_pgdata:/var/lib/postgresql/data
+volumes:
+  blueprints_pgdata:
