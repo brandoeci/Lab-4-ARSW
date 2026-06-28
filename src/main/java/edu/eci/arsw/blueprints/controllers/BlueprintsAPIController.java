@@ -107,4 +107,18 @@ public class BlueprintsAPIController {
             @NotBlank String name,
             @Valid List<Point> points
     ) { }
+    @Operation(summary = "Elimina un blueprint")
+    @ApiResponses({
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "200", description = "Blueprint eliminado exitosamente"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                    responseCode = "404", description = "Blueprint no encontrado")
+    })
+    @DeleteMapping("/{author}/{bpname}")
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable String author,
+                                                    @PathVariable String bpname)
+            throws BlueprintNotFoundException {
+        services.deleteBlueprint(author, bpname);
+        return ResponseEntity.ok(new ApiResponse<>(200, "blueprint deleted", null));
+    }
 }

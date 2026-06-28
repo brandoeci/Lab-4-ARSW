@@ -99,4 +99,12 @@ public class PostgresBlueprintPersistence implements BlueprintPersistence {
         return jdbc.query("SELECT x, y FROM points WHERE blueprint_id = ? ORDER BY seq",
                 (rs, i) -> new Point(rs.getInt("x"), rs.getInt("y")), blueprintId);
     }
+
+    @Override
+    @Transactional
+    public void deleteBlueprint(String author, String name) throws BlueprintNotFoundException {
+        Long id = findBlueprintId(author, name);
+        jdbc.update("DELETE FROM points WHERE blueprint_id = ?", id);
+        jdbc.update("DELETE FROM blueprints WHERE id = ?", id);
+    }
 }
